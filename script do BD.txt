@@ -1,0 +1,208 @@
+nome do BD: meuBD
+usuario: app
+senha: app
+
+create table usuario(
+usuario_id integer not null,
+nome varchar(255),
+email varchar(255),
+sexo varchar(20),
+datas varchar(70),
+primary key(usuario_id)
+);
+
+
+CREATE TABLE Endereco(
+    endereco_id integer not null,
+usuario_id integer not null,
+    rua VARCHAR(400),
+    numero VARCHAR(400),
+    bairro VARCHAR(400),
+    CEP VARCHAR(400),
+    cidade VARCHAR(400),
+    UF VARCHAR(400),
+    pais VARCHAR(400),
+primary key(endereco_id),
+FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
+);
+
+CREATE TABLE Telefone(
+    telefone_id integer not null,
+	usuario_id integer not null,
+    ddd INTEGER NOT NULL,
+    numero INTEGER NOT NULL,
+primary key(telefone_id),
+FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
+);
+
+
+create table medico(
+    medico_id integer not null,
+    usuario_id integer not null,
+    crm varchar(255),
+    especialidade varchar(255),
+    primary key(medico_id),
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
+);
+
+create table cliente(
+    usuario_id integer not null,
+    cpf varchar(255),
+    primary key (cpf),
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
+);
+
+create table consulta(
+    consulta_id int not null, 
+    cliente_cpf varchar(255) not null,
+    medico_crm varchar(255) not null,
+    datas varchar(255),
+    horario varchar(60),
+    diaSemana varchar(255),
+    FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf),
+    FOREIGN KEY (medico_crm) REFERENCES medico(crm)
+);
+
+CREATE SEQUENCE usuario_id_sequence
+AS INT
+START WITH 1;
+
+CREATE SEQUENCE consulta_id_sequence
+AS INT
+START WITH 1;
+
+CREATE SEQUENCE endereco_id_sequence
+AS INT
+START WITH 1;
+
+CREATE SEQUENCE medico_id_sequence
+AS INT
+START WITH 1;
+
+CREATE SEQUENCE cliente_id_sequence
+AS INT
+START WITH 1;
+
+CREATE SEQUENCE telefone_id_sequence
+AS INT
+START WITH 1;
+
+----USUARIO
+INSERT
+INTO usuario(usuario_id, nome, email, sexo, datas)
+VALUES (1, 'José Bezerra', 'jb@hotmail.com', 'M', '20/04/1963');
+
+INSERT
+INTO usuario(usuario_id, nome, email, sexo, datas)
+VALUES (2,'Fernanda Katri', 'fernanda_k@gmail.com','F', '01/11/1985');
+
+INSERT
+INTO usuario(usuario_id, nome, email, sexo, datas)
+VALUES (3,'Ana Maria Oliveira', 'ana_maria@gmail.com','F', '10/01/2001');
+
+INSERT
+INTO usuario(usuario_id, nome, email, sexo, datas)
+VALUES (4,'Marcos Vanilha', 'm.vanilha@hotmail.com', 'M', '15/06/1962');
+
+INSERT
+INTO usuario(usuario_id, nome, email, sexo, datas)
+VALUES (5,'Daniele Santos', 'dani@gmail.com','F', '09/12/1980');
+
+INSERT
+INTO usuario(usuario_id, nome, email, sexo, datas)
+VALUES (6,'Bruno Silva', 'bsilva@gmail.com', 'M', '06/02/1960');
+
+
+---CLIENTE
+INSERT
+INTO Cliente(cliente_id, usuario_id, cpf)
+VALUES (1,1,'987.231.666-04');
+
+INSERT
+INTO Cliente(cliente_id, usuario_id, cpf)
+VALUES (2,2,'342.111.986-10');
+
+INSERT
+INTO Cliente(cliente_id, usuario_id, cpf)
+VALUES (3,3,'876.014.221-74');
+
+
+---MEDICO
+INSERT
+INTO Medico(medico_id, usuario_id, crm, especialidade)
+VALUES (1, 4,'8432/SP', 'clinico geral');
+
+INSERT
+INTO Medico(medico_id, usuario_id, crm, especialidade)
+VALUES (2,5, '1992314450/SP', 'ortopodista');
+
+INSERT
+INTO Medico(medico_id, usuario_id, crm, especialidade)
+VALUES (3,6,'1022981986/RJ','nutricionista');
+
+
+---CONSULTA
+INSERT
+INTO consulta(consulta_id, cliente_id, medico_id, datas, horario, diaSemana)
+VALUES (1, 1, 2,'03/05/2017', '10:00', 'sexta-feira');
+
+INSERT
+INTO Consulta(consulta_id, cliente_id, medico_id, datas, horario, diaSemana)
+VALUES (2, 2, 3,'20/06/2017', '14:00', 'quinta-feira');
+
+INSERT
+INTO Consulta(consulta_id, cliente_id, medico_id, datas, horario, diaSemana)
+VALUES (3, 3, 1,'07/07/2017', '09:00', 'segunda-feira');
+
+
+
+---ENDERECO
+INSERT
+INTO Endereco (endereco_id, usuario_id, rua, numero, bairro, CEP, cidade, UF, pais)
+VALUES (1,1, 'Rua Tijuca', '1010', 'JD. Tomazito','99999-000', 'São Paulo', 'SP', 'Brasil');
+
+INSERT
+INTO Endereco (endereco_id, usuario_id, rua, numero, bairro, CEP, cidade, UF, pais)
+VALUES (2,2,'Av Jordão', '222', 'JD. Tamari','09888-777', 'São Paulo', 'SP', 'Brasil');
+
+INSERT
+INTO Endereco (endereco_id, usuario_id, rua, numero, bairro, CEP, cidade, UF, pais)
+VALUES (3,3, 'Rua Itamaraca', '99990', 'Favela do Alemão', '23456-090', 'Rio de Janeiro', 'RJ', 'Brasil');
+
+INSERT
+INTO Endereco (endereco_id, usuario_id, rua, numero, bairro, CEP, cidade, UF, pais)
+VALUES (4,4, 'Av. Santos', '510', 'Alameda Bueno', '88887-029', 'São Paulo', 'SP', 'Brasil');
+
+INSERT
+INTO Endereco (endereco_id, usuario_id, rua, numero, bairro, CEP, cidade, UF, pais)
+VALUES (5, 5,'Rua Matos', '9000', 'Julio Bom', '32444-666', 'São Paulo', 'SP', 'Brasil');
+
+INSERT
+INTO Endereco (endereco_id,usuario_id,  rua, numero, bairro, CEP, cidade, UF, pais)
+VALUES (6, 6,'Av. Jardins', '50', 'Santini', '12334-988', 'São Paulo', 'SP', 'Brasil');
+
+
+---TELEFONE
+INSERT
+INTO Telefone (telefone_id, usuario_id, ddd, numero)
+VALUES (1,1, 11, 28896666);
+
+INSERT
+INTO Telefone (telefone_id, usuario_id, ddd, numero)
+VALUES (2,2,11, 27783399);
+
+INSERT
+INTO Telefone (telefone_id, usuario_id, ddd, numero)
+VALUES (3,3, 21, 89976653);
+
+INSERT
+INTO Telefone (telefone_id, usuario_id, ddd, numero)
+VALUES (4,4,11, 20998433);
+
+INSERT
+INTO Telefone (telefone_id, usuario_id, ddd, numero)
+VALUES (5,5,19, 21448766);
+
+INSERT
+INTO Telefone (telefone_id, usuario_id, ddd, numero)
+VALUES (6,6,11, 29987662);
